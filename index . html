@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تموينك على سيمكس | منظومة الحوكمة والرقابة والاستمارة المعتمدة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060b16;
+      --surface: rgba(15, 25, 45, 0.85);
+      --surface-2: rgba(23, 38, 68, 0.92);
+      --card-hover: rgba(30, 50, 88, 0.96);
+      --border: rgba(148, 163, 184, 0.2);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --cemex-blue: #0033a0;
+      --cemex-sky: #0ea5e9;
+      --cemex-red: #e11d48;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --purple: #8b5cf6;
+      --book-paper: #0e182d;
+      --book-spine: #040811;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cairo', 'Inter', sans-serif;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(0, 51, 160, 0.38), transparent 40%),
+        radial-gradient(circle at 85% 12%, rgba(225, 29, 72, 0.18), transparent 36%),
+        radial-gradient(circle at 50% 85%, rgba(14, 165, 233, 0.16), transparent 45%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    body[dir="ltr"] { font-family: 'Inter', 'Cairo', sans-serif; }
+
+    .container { max-width: 1220px; margin: 0 auto; padding: 18px 20px 80px; }
+
+    /* Sticky Top Hyperlink Navbar */
+    .navbar {
+      position: sticky; top: 12px; z-index: 100;
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
+      background: rgba(10, 18, 34, 0.9);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      padding: 12px 18px;
+      border-radius: 18px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo-box {
+      background: linear-gradient(135deg, var(--cemex-blue), var(--cemex-red));
+      color: #fff; font-weight: 800; padding: 8px 14px; border-radius: 12px;
+      font-size: 0.92rem; letter-spacing: 0.4px;
+    }
+    .brand-title { font-weight: 800; font-size: 1.05rem; }
+    .brand-sub { color: var(--muted); font-size: 0.8rem; }
+
+    .nav-links { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .nav-item {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--surface-2); color: var(--text);
+      border: 1px solid var(--border);
+      padding: 7px 13px; border-radius: 11px;
+      text-decoration: none; font-size: 0.85rem; font-weight: 700;
+      transition: all 0.22s ease;
+    }
+    .nav-item:hover {
+      border-color: var(--cemex-sky);
+      background: rgba(14, 165, 233, 0.18);
+      transform: translateY(-2px);
+    }
+
+    .lang-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, var(--cemex-blue), #1d4ed8);
+      color: #fff; border: 1px solid rgba(56, 189, 248, 0.55);
+      padding: 8px 15px; border-radius: 11px;
+      cursor: pointer; font-weight: 800; font-size: 0.86rem; font-family: inherit;
+      transition: 0.22s ease;
+    }
+    .lang-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(14, 165, 233, 0.35); }
+
+    /* Hero Banner */
+    .hero {
+      margin-top: 22px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 24px; padding: 34px 28px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ""; position: absolute; inset-inline-end: -70px; top: -70px; width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.24), transparent 70%); pointer-events: none;
+    }
+    .badge-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(16, 185, 129, 0.14); border: 1px solid rgba(16, 185, 129, 0.38);
+      color: #6ee7b7; padding: 5px 14px; border-radius: 999px; font-size: 0.82rem; font-weight: 700;
+      margin-bottom: 14px;
+    }
+    h1 { font-size: clamp(1.6rem, 3.1vw, 2.45rem); font-weight: 800; line-height: 1.28; margin-bottom: 12px; }
+    .hero p { color: var(--muted); max-width: 900px; font-size: 1rem; }
+
+    /* Interactive KPI Strip */
+    .kpi-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+      gap: 14px; margin-top: 24px;
+    }
+    .kpi-card {
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 16px; padding: 18px;
+      transition: 0.25s ease; cursor: default;
+    }
+    .kpi-card:hover { transform: translateY(-3px); border-color: var(--cemex-sky); }
+    .kpi-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .kpi-icon { font-size: 1.35rem; }
+    .kpi-val { font-size: 1.65rem; font-weight: 800; }
+    .c-sky { color: #38bdf8; }
+    .c-emerald { color: #34d399; }
+    .c-amber { color: #fbbf24; }
+    .c-rose { color: #fb7185; }
+    .kpi-label { color: var(--muted); font-size: 0.86rem; }
+
+    /* Section Headings */
+    section { margin-top: 42px; scroll-margin-top: 92px; }
+    .sec-head {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px;
+      margin-bottom: 18px;
+    }
+    .sec-title-wrap { display: flex; align-items: center; gap: 10px; }
+    .sec-icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      display: grid; place-items: center; font-size: 1.25rem;
+      background: rgba(14, 165, 233, 0.16); border: 1px solid rgba(14, 165, 233, 0.35);
+    }
+    h2 { font-size: 1.45rem; font-weight: 800; }
+    .sec-sub { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+
+    /* Executive Summary & Operational Cards */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+    .info-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 22px;
+      transition: 0.25s ease;
+    }
+    .info-card:hover { border-color: rgba(56, 189, 248, 0.45); }
+    .info-card h3 {
+      font-size: 1.1rem; font-weight: 800; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .bullet-list { list-style: none; display: grid; gap: 10px; }
+    .bullet-list li {
+      background: var(--surface-2); border: 1px solid var(--border);
+      padding: 12px 14px; border-radius: 12px; font-size: 0.9rem;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .dot-icon { font-size: 1.05rem; flex-shrink: 0; margin-top: 2px; }
+
+    /* Filter Chips */
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      background: var(--surface); color: var(--muted); border: 1px solid var(--border);
+      padding: 7px 14px; border-radius: 999px; cursor: pointer; font-size: 0.84rem; font-weight: 700;
+      font-family: inherit; transition: 0.2s;
+    }
+    .chip.active, .chip:hover {
+      background: var(--cemex-blue); color: #fff; border-color: var(--cemex-sky);
+    }
+
+    /* Interactive 8 Rules Cards */
+    .rule-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: all 0.25s ease; cursor: pointer; position: relative; overflow: hidden;
+    }
+    .rule-card:hover {
+      transform: translateY(-4px);
+      background: var(--card-hover);
+      border-color: var(--cemex-sky);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+    }
+    .rule-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .rule-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-weight: 800; padding: 4px 11px; border-radius: 9px; font-size: 0.82rem;
+    }
+    .rb-blue { background: rgba(14, 165, 233, 0.18); color: #7dd3fc; }
+    .rb-amber { background: rgba(245, 158, 11, 0.18); color: #fcd34d; }
+    .rb-rose { background: rgba(225, 29, 72, 0.2); color: #fda4af; }
+    .rb-emerald { background: rgba(16, 185, 129, 0.18); color: #6ee7b7; }
+
+    .tier-pill {
+      font-size: 0.78rem; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+      background: rgba(139, 92, 246, 0.18); color: #c4b5fd; border: 1px solid rgba(139, 92, 246, 0.35);
+    }
+    .rule-card h3 { font-size: 1.06rem; font-weight: 800; }
+    .rule-card p { color: var(--muted); font-size: 0.91rem; }
+    .exc-box {
+      background: rgba(6, 11, 22, 0.65); border-inline-start: 3px solid var(--cemex-sky);
+      padding: 10px 12px; border-radius: 10px; font-size: 0.87rem; color: #e2e8f0;
+    }
+
+    /* Approval Matrix Table */
+    .table-wrap {
+      overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 740px; }
+    th, td { padding: 13px 16px; text-align: start; border-bottom: 1px solid var(--border); font-size: 0.89rem; }
+    th { background: var(--surface-2); font-weight: 800; color: #e2e8f0; }
+    tr:hover td { background: rgba(14, 165, 233, 0.06); }
+    tr:last-child td { border-bottom: none; }
+    .chk-pill {
+      display: inline-block; padding: 3px 10px; border-radius: 8px; font-weight: 700; font-size: 0.82rem;
+      background: rgba(16, 185, 129, 0.16); color: #6ee7b7;
+    }
+
+    /* Simulator */
+    .sim-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px;
+    }
+    .sim-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 18px;
+    }
+    .field label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; color: #cbd5e1; }
+    .field select {
+      width: 100%; background: var(--surface-2); color: var(--text); border: 1px solid var(--border);
+      padding: 10px 12px; border-radius: 10px; font-family: inherit; font-size: 0.89rem;
+    }
+    .sim-result {
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 16px; padding: 18px;
+    }
+    .st-badge {
+      display: inline-block; padding: 5px 13px; border-radius: 999px; font-weight: 800; font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+    .st-ok { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+    .st-warn { background: rgba(245, 158, 11, 0.22); color: #fcd34d; }
+    .st-danger { background: rgba(239, 68, 68, 0.22); color: #fca5a5; }
+
+    /* ================= INTERACTIVE BOOK SECTION (WORD FORM) ================= */
+    .book-wrapper {
+      background: linear-gradient(145deg, #0b1324, #111e38);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 26px;
+      padding: 26px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .book-tabs {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px;
+      padding-bottom: 14px; border-bottom: 1px solid var(--border);
+    }
+    .book-tab {
+      background: var(--surface-2); color: var(--muted); border: 1px solid var(--border);
+      padding: 7px 13px; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.83rem;
+      font-family: inherit; transition: 0.2s;
+    }
+    .book-tab.active, .book-tab:hover {
+      background: linear-gradient(135deg, var(--cemex-blue), var(--cemex-sky));
+      color: #fff; border-color: transparent;
+    }
+
+    .book-spread {
+      display: grid;
+      grid-template-columns: 1fr 12px 1fr;
+      background: var(--book-paper);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 20px;
+      overflow: hidden;
+      min-height: 460px;
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .book-spine {
+      background: linear-gradient(to right, #030712, #1e293b, #030712);
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.8);
+    }
+
+    .book-page {
+      padding: 26px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      animation: pageFade 0.32s ease;
+    }
+
+    @keyframes pageFade {
+      from { opacity: 0.35; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 10px; margin-bottom: 14px;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.3);
+      font-size: 0.82rem; color: #7dd3fc; font-weight: 700;
+    }
+
+    .page-body h3 {
+      font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .page-items { list-style: none; display: grid; gap: 9px; }
+    .page-items li {
+      background: rgba(23, 38, 68, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+    }
+    .page-items li strong { color: #38bdf8; }
+
+    .page-footer {
+      margin-top: 16px; padding-top: 10px;
+      border-top: 1px solid rgba(148, 163, 184, 0.16);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.8rem; color: var(--muted);
+    }
+
+    .book-controls {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
+      margin-top: 18px;
+    }
+    .book-btn {
+      background: var(--surface-2); color: #fff; border: 1px solid var(--border);
+      padding: 9px 18px; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 0.88rem;
+      font-family: inherit; transition: 0.2s;
+    }
+    .book-btn:hover:not(:disabled) {
+      background: var(--cemex-blue); border-color: var(--cemex-sky);
+    }
+    .book-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .page-indicator { font-weight: 800; color: #7dd3fc; font-size: 0.92rem; }
+
+    @media (max-width: 860px) {
+      .book-spread { grid-template-columns: 1fr; }
+      .book-spine { height: 8px; width: 100%; }
+    }
+
+    footer {
+      margin-top: 48px; text-align: center; color: var(--muted); font-size: 0.85rem;
+      padding-top: 20px; border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body dir="rtl">
+  <div class="container">
+
+    <!-- Sticky Hyperlink Navbar -->
+    <nav class="navbar">
+      <div class="brand">
+        <span class="logo-box">CEMEX • تموينك</span>
+        <div>
+          <div class="brand-title" id="t-brandTitle">منظومة حوكمة وتطوير برنامج «تموينك على سيمكس»</div>
+          <div class="brand-sub" id="t-brandSub">شركة أسمنت أسيوط — إطار الرقابة والاعتمادات والاستمارة المعتمدة</div>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a href="#sec-overview" class="nav-item" id="nav-1">🎯 ملخص التطوير</a>
+        <a href="#sec-rules" class="nav-item" id="nav-2">🛡️ القواعد الـ 8</a>
+        <a href="#sec-matrix" class="nav-item" id="nav-3">✅ مصفوفة الاعتمادات</a>
+        <a href="#sec-simulator" class="nav-item" id="nav-4">⚙️ محاكي القرار</a>
+        <a href="#sec-book" class="nav-item" id="nav-5">📖 كتاب الاستمارة</a>
+        <button class="lang-btn" onclick="toggleLang()" id="langBtn">🌐 English (LTR)</button>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="badge-pill" id="t-pill">✨ نظام الحوكمة المحدث والاستمارة الرسمية • RTL.29.10.2026</div>
+      <h1 id="t-heroTitle">تطوير برنامج «تموينك على سيمكس»: عدالة التوزيع، التحقق الصارم، وحوكمة الاستثناءات</h1>
+      <p id="t-heroDesc">
+        منظومة متكاملة لحماية القيمة التجارية لبرنامج ولاء المقاولين وتعزيز الشفافية وصحة المعاملات، من خلال وضع سقوف واضحة للزيارات والتركّز والكميات، وتفعيل مكالمات التحقق (Back-Check)، والمطابقة الدورية مع نظام SAP، واعتماد الاستثناءات عبر مستويات إدارية موثقة.
+      </p>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-val c-sky">1 / Day</span>
+            <span class="kpi-icon">📍</span>
+          </div>
+          <div class="kpi-label" id="t-kpi1">الحد القياسي للزيارات الميدانية المقبولة لكل مقاول يومياً</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-val c-emerald">10% Max</span>
+            <span class="kpi-icon">📊</span>
+          </div>
+          <div class="kpi-label" id="t-kpi2">سقف تركّز المقاول إقليمياً (كل 15 يوماً) ومن إجمالي المكافآت</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-val c-amber">20% Cap</span>
+            <span class="kpi-icon">🏭</span>
+          </div>
+          <div class="kpi-label" id="t-kpi3">الحد الأقصى لكميات المقاول مقارنة بسحوبات التاجر الشهرية</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-val c-rose">17+7</span>
+            <span class="kpi-icon">📖</span>
+          </div>
+          <div class="kpi-label" id="t-kpi4">17 قسماً في استمارة التسجيل الرسمية + 7 ضوابط تشغيلية صارمة</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Section 1: Executive Summary & Operational Additions -->
+    <section id="sec-overview">
+      <div class="sec-head">
+        <div class="sec-title-wrap">
+          <div class="sec-icon">🎯</div>
+          <div>
+            <h2 id="t-ovTitle">الملخص التنفيذي والإضافات التشغيلية (Email Governance Framework)</h2>
+            <div class="sec-sub" id="t-ovSub">أهداف التطوير وضوابط التشغيل الميداني والتيلماركتنج ومطابقة SAP</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="info-card">
+          <h3 id="t-execHead">📌 الملخص التنفيذي للتطوير</h3>
+          <ul class="bullet-list" id="execList"></ul>
+        </div>
+        <div class="info-card">
+          <h3 id="t-opsHead">📞 ضوابط التشغيل الميداني والتيلماركتنج وSAP</h3>
+          <ul class="bullet-list" id="opsList"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: 8 Proposed Control Measures -->
+    <section id="sec-rules">
+      <div class="sec-head">
+        <div class="sec-title-wrap">
+          <div class="sec-icon">🛡️</div>
+          <div>
+            <h2 id="t-rulesTitle">القواعد والضوابط الرقابية الثمانية (Proposed Control Measures)</h2>
+            <div class="sec-sub" id="t-rulesSub">اضغط على التصنيف لتصفية القواعد حسب جهة اعتماد الاستثناء</div>
+          </div>
+        </div>
+
+        <div class="filters">
+          <button class="chip active" onclick="filterRules('all', this)" id="f-all">الكل (8)</button>
+          <button class="chip" onclick="filterRules('consultant', this)" id="f-consultant">استشاري المبيعات</button>
+          <button class="chip" onclick="filterRules('manager', this)" id="f-manager">مدير المبيعات</button>
+          <button class="chip" onclick="filterRules('director', this)" id="f-director">مدير قطاع المبيعات</button>
+        </div>
+      </div>
+
+      <div class="grid-2" id="rulesGrid"></div>
+    </section>
+
+    <!-- Section 3: Approval Matrix Summary -->
+    <section id="sec-matrix">
+      <div class="sec-head">
+        <div class="sec-title-wrap">
+          <div class="sec-icon">✅</div>
+          <div>
+            <h2 id="t-matTitle">ملخص مصفوفة الاعتمادات (Approval Matrix Summary)</h2>
+            <div class="sec-sub" id="t-matSub">جميع الاستثناءات المعتمدة تشترط بريداً إلكترونياً رسمياً مع نسخة (CC) لمدير قطاع المبيعات</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th id="th-1">الاستثناء / المحفّز (Exception / Trigger)</th>
+              <th id="th-2">استشاري المبيعات (Sales Consultant)</th>
+              <th id="th-3">مدير المبيعات (Sales Manager)</th>
+              <th id="th-4">مدير قطاع المبيعات (Sales Director)</th>
+            </tr>
+          </thead>
+          <tbody id="matrixBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Interactive Decision Simulator -->
+    <section id="sec-simulator">
+      <div class="sec-head">
+        <div class="sec-title-wrap">
+          <div class="sec-icon">⚙️</div>
+          <div>
+            <h2 id="t-simTitle">محاكي فحص الحالة والاعتماد التلقائي (Governance Simulator)</h2>
+            <div class="sec-sub" id="t-simSub">اختر معطيات الحالة لمعرفة القرار التشغيلي ومستوى الاعتماد المطلوب فوراً</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim-box">
+        <div class="sim-grid">
+          <div class="field">
+            <label id="l-kyc">1. استيفاء الاستمارة والبطاقة والهاتف</label>
+            <select id="s-kyc" onchange="runSim()">
+              <option value="yes">مكتملة وموثقة بالكامل</option>
+              <option value="no">ناقصة / غير موثقة</option>
+            </select>
+          </div>
+          <div class="field">
+            <label id="l-bc">2. مكالمة التحقق (Contractor Back-Check)</label>
+            <select id="s-bc" onchange="runSim()">
+              <option value="answered">تم الرد وتأكيد البيانات</option>
+              <option value="unreachable">تعذر الوصول للمقاول</option>
+            </select>
+          </div>
+          <div class="field">
+            <label id="l-ret">3. نوع التاجر ومطابقة SAP</label>
+            <select id="s-ret" onchange="runSim()">
+              <option value="agent_ok">تاجر وكيل مسجل + مطابق لـ SAP</option>
+              <option value="variance">يوجد فروق (Variance) في SAP</option>
+              <option value="second_no">تاجر ثانوي (Second-hand) بدون موافقة Salesman</option>
+            </select>
+          </div>
+          <div class="field">
+            <label id="l-vis">4. عدد الزيارات للمقاول في اليوم</label>
+            <select id="s-vis" onchange="runSim()">
+              <option value="1">1 زيارة (الحد القياسي)</option>
+              <option value="2">2 زيارة (استثناء)</option>
+              <option value="3">3 زيارات (استثناء)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label id="l-conc">5. نسب التركّز وسحوبات التاجر</label>
+            <select id="s-conc" onchange="runSim()">
+              <option value="normal">ضمن الحدود القياسية (≤10% / ≤20%)</option>
+              <option value="mid">متوسط (إقليمي >10%–15% أو تاجر >20%–25%)</option>
+              <option value="high">مرتفع (إقليمي >15% أو مكافآت >10% أو تاجر >25%)</option>
+            </select>
+          </div>
+        </div>
+        <div class="sim-result" id="simOutput"></div>
+      </div>
+    </section>
+
+    <!-- Section 5: Interactive Book (Official Word Registration Form RTL.29.10.2026) -->
+    <section id="sec-book">
+      <div class="sec-head">
+        <div class="sec-title-wrap">
+          <div class="sec-icon">📖</div>
+          <div>
+            <h2 id="t-bookTitle">كتاب استمارة الاشتراك والتسجيل والالتزام (RTL.29.10.2026)</h2>
+            <div class="sec-sub" id="t-bookSub">تصفّح بنود استمارة شركة أسمنت أسيوط الـ 17 والتنبيهات التشغيلية ككتاب تفاعلي</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-wrapper">
+        <div class="book-tabs" id="bookTabs"></div>
+
+        <div class="book-spread">
+          <div class="book-page" id="leftPage"></div>
+          <div class="book-spine"></div>
+          <div class="book-page" id="rightPage"></div>
+        </div>
+
+        <div class="book-controls">
+          <button class="book-btn" id="prevSpreadBtn" onclick="changeSpread(-1)">◀ الصفحة السابقة</button>
+          <span class="page-indicator" id="spreadIndicator">صفحة 1–2 من 8</span>
+          <button class="book-btn" id="nextSpreadBtn" onclick="changeSpread(1)">الصفحة التالية ▶</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span id="t-footer">منظومة حوكمة وتطوير برنامج «تموينك على سيمكس» — شركة أسمنت أسيوط</span>
+    </footer>
+  </div>
+
+  <script>
+    let lang = 'ar';
+    let currentSpread = 0;
+
+    const execData = [
+      {
+        icon: '⚖️',
+        ar: 'الحفاظ على الأثر التجاري للبرنامج والاحتفاظ بالمقاولين مع تقليل مخاطر تحيز المروجين أو التجار تجاه مقاولين محددين.',
+        en: 'Preserve commercial and contractor-retention impact while reducing promoter or retailer bias toward selected contractors.'
+      },
+      {
+        icon: '🌐',
+        ar: 'الحد من تركّز المعاملات والمكافآت في عدد محدود من المقاولين لتوسيع قاعدة المستفيدين الفعليين من البرنامج.',
+        en: 'Limit concentration of transactions and rewards per contractor to reach a broader contractor base.'
+      },
+      {
+        icon: '📝',
+        ar: 'تطبيق مستويات اعتماد موثقة ومتدرجة تشمل إلزامية إشراك مدير قطاع المبيعات (Sales Director) في الاستثناءات الجوهرية.',
+        en: 'Introduce documented, tiered approvals, including mandatory Sales Director involvement for material exceptions.'
+      },
+      {
+        icon: '🔍',
+        ar: 'تعزيز التحقق عبر المراجعات الميدانية، ومطابقة SAP، وفحص شحنات التجار، والرقابة المركزية عبر لوحة متابعة.',
+        en: 'Strengthen validation through field audits, SAP reconciliation, retailer-dispatch checks, and centralized dashboard monitoring.'
+      }
+    ];
+
+    const opsData = [
+      {
+        icon: '📞',
+        ar: '<strong>مكالمات التحقق (Contractor Back-Check):</strong> إلزامية في كل مرة؛ وأي مقاول يتعذر الوصول إليه يتم تعليق كميته فوراً حتى يثبت خلاف ذلك.',
+        en: '<strong>Contractor Back-Check:</strong> Conducted every time; any unreachable contractor has their quantity withheld unless proven otherwise.'
+      },
+      {
+        icon: '🏪',
+        ar: '<strong>تصنيف التجار (Retailers):</strong> احتساب التجار الوكلاء المسجلين فقط؛ أما التجار الثانويون (Second-hand) فتُشترط موافقة Salesman قبل احتسابهم.',
+        en: '<strong>Retailers:</strong> Only registered agent retailers counted; second-hand retailers require Salesman approval before counting.'
+      },
+      {
+        icon: '🗂️',
+        ar: '<strong>إعادة هيكلة ملفات SAP:</strong> تنظيم الملفات حسب رقم تسجيل التاجر (Retailer Reg. No) وعدم تغطية Second-hand ضمنها وحفظ أكثر من عنصر.',
+        en: '<strong>SAP File Restructure:</strong> Restructure by Retailer Reg. No, exclude second-hand coverage, and store multiple elements.'
+      },
+      {
+        icon: '🧭',
+        ar: '<strong>حوكمة المروجين وتحديد الهوية:</strong> تفعيل المراجعات الميدانية وهيكل إشراف المروجين فوراً، وترحيل توسعات تحديد الهوية للعام القادم.',
+        en: '<strong>Promoter Governance & ID:</strong> Activate field audits & supervisor structure now; defer extended ID rollout to next year.'
+      }
+    ];
+
+    const rulesData = [
+      {
+        num: '01', icon: '🪪', color: 'rb-rose', tier: 'all',
+        arTier: 'إلزامي قبل التنفيذ', enTier: 'Mandatory Gate',
+        arTitle: 'تحديد هوية المقاول (Contractor Identification)',
+        enTitle: 'Contractor Identification',
+        arRule: 'استكمال التسجيل بالكامل متضمناً رقم الهاتف المحمول ومستندات الهوية الرسمية المرفقة بالاستمارة.',
+        enRule: 'Complete registration, including mobile number and official identification documents (attached registration form).',
+        arExc: 'الاستثناء: لا يتم تنفيذ أي معالجة قبل استكمال البيانات الإلزامية.',
+        enExc: 'Exception: No processing until mandatory data is complete.'
+      },
+      {
+        num: '02', icon: '📍', color: 'rb-blue', tier: 'consultant',
+        arTier: 'استشاري / مدير مبيعات', enTier: 'Consultant / Manager',
+        arTitle: 'الزيارات الميدانية (Site Visits)',
+        enTitle: 'Site Visits',
+        arRule: 'زيارة واحدة مقبولة لكل مقاول في اليوم الواحد.',
+        enRule: 'One accepted visit per contractor per day.',
+        arExc: 'الاستثناء: الزيارة الثانية ← استشاري المبيعات | الزيارة الثالثة ← مدير المبيعات.',
+        enExc: 'Exception: 2nd visit → Sales Consultant; 3rd visit → Sales Manager.'
+      },
+      {
+        num: '03', icon: '🗺️', color: 'rb-amber', tier: 'director',
+        arTier: 'مدير مبيعات / قطاع', enTier: 'Manager / Director',
+        arTitle: 'تركّز المقاول حسب المنطقة (Concentration by Region)',
+        enTitle: 'Contractor Concentration by Region',
+        arRule: 'حد أقصى 10% من قيمة التحويل الإقليمية خلال كل فترة 15 يوماً.',
+        enRule: 'Maximum 10% of the regional conversion value during each 15-day period.',
+        arExc: 'الاستثناء: أعلى من 10% ← مدير المبيعات | أعلى من 15% ← مدير قطاع المبيعات.',
+        enExc: 'Exception: Above 10% → Sales Manager; above 15% → Sales Director.'
+      },
+      {
+        num: '04', icon: '🏆', color: 'rb-rose', tier: 'director',
+        arTier: 'مدير قطاع المبيعات', enTier: 'Sales Director',
+        arTitle: 'تركّز إجمالي مكافآت البرنامج (Total Reward Concentration)',
+        enTitle: 'Total Program Reward Concentration',
+        arRule: 'حد أقصى 10% من إجمالي مكافآت البرنامج لمقاول واحد.',
+        enRule: 'Maximum 10% of the overall program rewards for one contractor.',
+        arExc: 'الاستثناء: يتطلب اعتماد مدير قطاع المبيعات حصرياً.',
+        enExc: 'Exception: Sales Director approval required.'
+      },
+      {
+        num: '05', icon: '🚚', color: 'rb-amber', tier: 'director',
+        arTier: 'مدير مبيعات / قطاع', enTier: 'Manager / Director',
+        arTitle: 'كمية المقاول مقابل شحنات التاجر (Quantity vs. Dispatch)',
+        enTitle: 'Contractor Quantity vs. Retailer Dispatch',
+        arRule: 'ألا تتجاوز كميات المقاول 20% من شحنات التاجر الشهرية.',
+        enRule: 'Contractor quantities should not exceed 20% of the retailer’s monthly dispatch.',
+        arExc: 'الاستثناء: 20%–25% ← مدير المبيعات | أعلى من 25% ← مدير قطاع المبيعات.',
+        enExc: 'Exception: 20%–25% → Sales Manager; above 25% → Sales Director.'
+      },
+      {
+        num: '06', icon: '🧾', color: 'rb-emerald', tier: 'manager',
+        arTier: 'مدير المبيعات + تصعيد', enTier: 'Sales Manager + Escalation',
+        arTitle: 'التحقق من الكميات ومطابقة SAP (Quantity Validation)',
+        enTitle: 'Quantity Validation',
+        arRule: 'مطابقة دورية للكميات المبلّغ عنها مقابل سحوبات العملاء في SAP والمستندات المؤيدة.',
+        enRule: 'Periodic reconciliation of reported quantities against customer withdrawals in SAP and supporting documentation.',
+        arExc: 'الاستثناء: فحص أي فروق (Variance) واعتمادها قبل صرف المكافآت.',
+        enExc: 'Exception: Any variance to be investigated and approved before reward processing.'
+      },
+      {
+        num: '07', icon: '🕵️', color: 'rb-blue', tier: 'manager',
+        arTier: 'حسب مصفوفة الاعتماد', enTier: 'Per Approval Matrix',
+        arTitle: 'حوكمة المروجين والتدقيق الميداني (Promoter Governance)',
+        enTitle: 'Promoter Governance',
+        arRule: 'مراجعات ميدانية شهرية، وفحص المقاولين الجدد ومن يبلغون عن كميات كبيرة مع هيكلة إشراف ومتابعة.',
+        enRule: 'Monthly field audits, checks for newly enrolled contractors and contractors reporting significant quantities.',
+        arExc: 'الاستثناء: تخضع الاستثناءات لمصفوفة الاعتماد الرسمية.',
+        enExc: 'Exception: Exceptions to follow the formal approval matrix.'
+      },
+      {
+        num: '08', icon: '📧', color: 'rb-emerald', tier: 'director',
+        arTier: 'توثيق رسمي + CC', enTier: 'Official Email + CC',
+        arTitle: 'التوثيق والمتابعة المركزية (Documentation & Monitoring)',
+        enTitle: 'Documentation and Monitoring',
+        arRule: 'اعتماد جميع الاستثناءات عبر بريد رسمي (CC مدير قطاع المبيعات) وحفظها بالمستودعات السحابية والمحلية ولوحة متابعة.',
+        enRule: 'All exceptions approved via official email copying Sales Director; retained in repositories; tracked on dashboard.',
+        arExc: 'الاستثناء: يُمنع أي استثناء شفهي أو غير موثق.',
+        enExc: 'Exception: No verbal or undocumented exceptions.'
+      }
+    ];
+
+    const matrixData = [
+      { ar: 'الزيارة الثانية لنفس المقاول في اليوم', en: '2nd site visit for same contractor/day', c: '✔ Approve', m: '—', d: '—' },
+      { ar: 'الزيارة الثالثة لنفس المقاول في اليوم', en: '3rd site visit for same contractor/day', c: '—', m: '✔ Approve', d: '—' },
+      { ar: 'تركّز المقاول الإقليمي >10% إلى 15%', en: 'Regional contractor concentration >10% to 15%', c: '—', m: '✔ Approve', d: '—' },
+      { ar: 'تركّز المقاول الإقليمي أعلى من 15%', en: 'Regional contractor concentration >15%', c: '—', m: '—', d: '✔ Approve' },
+      { ar: 'إجمالي مكافآت البرنامج لمقاول واحد >10%', en: 'Total program rewards to one contractor >10%', c: '—', m: '—', d: '✔ Approve' },
+      { ar: 'كمية المقاول >20% إلى 25% من شحنات التاجر الشهرية', en: 'Contractor quantity >20% to 25% of retailer monthly dispatch', c: '—', m: '✔ Approve', d: '—' },
+      { ar: 'كمية المقاول أعلى من 25% من شحنات التاجر الشهرية', en: 'Contractor quantity >25% of retailer monthly dispatch', c: '—', m: '—', d: '✔ Approve' },
+      { ar: 'فروق مطابقة الكميات مع SAP', en: 'Quantity validation variance', c: '—', m: 'Required before processing*', d: 'Escalate where applicable*' },
+      { ar: 'استثناء حوكمة المروجين', en: 'Promoter governance exception', c: 'Per formal matrix', m: 'Per formal matrix', d: 'Per formal matrix' },
+      { ar: 'جميع الاستثناءات المعتمدة', en: 'All approved exceptions', c: 'Official email required', m: 'Official email required', d: 'Must be copied (CC)' }
+    ];
+
+    // 8 Book Spreads (16 facing pages covering all 17 sections + 7 internal operational rules)
+    const bookSpreads = [
+      {
+        tabAr: 'الفصل 1: البيانات والمستندات والهاتف (1–3)',
+        tabEn: 'Ch. 1: KYC, Docs & Mobile (1–3)',
+        left: {
+          page: '1', secAr: 'البنود أولاً وثانياً', secEn: 'Sections 1 & 2',
+          titleAr: '🪪 بيانات المقاول الشخصية والمستندات', titleEn: '🪪 Personal Data & Required Documents',
+          itemsAr: [
+            '<strong>بيانات الطلب:</strong> كود المقاول، تاريخ التسجيل، وحالة الطلب (تسجيل جديد / تحديث بيانات / إعادة تفعيل / إيقاف أو إلغاء تسجيل).',
+            '<strong>أولاً — البيانات الشخصية:</strong> الصورة الشخصية الحديثة، الاسم بالكامل طبقاً للبطاقة، اسم الشهرة، الرقم القومي، تاريخ انتهاء البطاقة، المحافظة، المركز/القسم، العنوان، النشاط المهني، ومنطقة ممارسة النشاط.',
+            '<strong>ثانياً — المستندات المقدمة:</strong> صورة بطاقة رقم قومي سارية، صورة شخصية حديثة، مستند إثبات النشاط المهني، وإقرار استخدام الهاتف إذا كان الخط غير مسجل باسم المقاول.'
+          ],
+          itemsEn: [
+            '<strong>Request Header:</strong> Contractor Code, Registration Date, and Status (New / Update / Reactivation / Suspension or Cancellation).',
+            '<strong>First — Personal Info:</strong> Recent photo, Full National ID Name, Nickname, National ID Number & Expiry, Governorate, District, Address, Profession, and Work Area.',
+            '<strong>Second — Documents:</strong> Valid National ID copy, recent photo, proof of trade/profession, and mobile usage declaration if SIM is not in contractor’s name.'
+          ]
+        },
+        right: {
+          page: '2', secAr: 'البند ثالثاً', secEn: 'Section 3',
+          titleAr: '📱 بيانات رقم الهاتف المحمول والتحقق (OTP)', titleEn: '📱 Mobile Number & OTP Verification',
+          itemsAr: [
+            '<strong>بيانات الخط:</strong> رقم الهاتف المحمول، اسم صاحب الخط المسجل لدى شركة الاتصالات، وصلة القرابة إذا كان مختلفاً.',
+            '<strong>الحيازة الفعلية:</strong> إثبات استخدام المقاول للرقم بنفسه، وكونه تحت حيازته وسيطرته الفعلية لاستقبال الرسائل والأكواد.',
+            '<strong>فحص التكرار:</strong> التحقق مما إذا سبق تسجيل الرقم باسم شخص آخر في البرنامج.',
+            '<strong>نتيجة التحقق:</strong> (تم التحقق بنجاح / تعذر التحقق / لم يتم التحقق بعد) مع تسجيل تاريخ التحقق واسم القائم بالتحقق.'
+          ],
+          itemsEn: [
+            '<strong>Line Details:</strong> Mobile number, registered SIM owner name at telecom operator, and relationship if different.',
+            '<strong>Actual Possession:</strong> Confirmation that contractor personally uses and controls the SIM to receive program SMS and codes.',
+            '<strong>Duplicate Check:</strong> Verification whether the mobile number was previously registered under another person.',
+            '<strong>OTP Outcome:</strong> (Verified / Failed / Pending) along with Verification Date and Verifier Name.'
+          ]
+        }
+      },
+      {
+        tabAr: 'الفصل 2: الإقرارات القانونية والهاتف (4–5)',
+        tabEn: 'Ch. 2: Legal & SIM Declarations (4–5)',
+        left: {
+          page: '3', secAr: 'البند رابعاً', secEn: 'Section 4',
+          titleAr: '✍️ إقرار المقاول بصحة البيانات والمستندات', titleEn: '✍️ Contractor Declaration of Data Accuracy',
+          itemsAr: [
+            '<strong>صحة وحداثة البيانات:</strong> إقرار بأن جميع البيانات والمستندات المقدمة لشركة أسمنت أسيوط صحيحة وكاملة وحقيقية وحديثة.',
+            '<strong>التخويل القانوني:</strong> ملكية المستندات أو التخويل القانوني بتقديمها وعدم إخفاء أو تحريف أي معلومة جوهرية.',
+            '<strong>عدم التزوير:</strong> تعهد قاطع بعدم تقديم أي مستندات مزورة أو مضللة تؤثر في التسجيل أو استحقاق الجوائز.',
+            '<strong>مسؤولية المقاول:</strong> مراجعة الشركة الظاهرية للمستندات لا تعفي المقاول من المسؤولية القانونية عن أي خطأ أو تزوير.'
+          ],
+          itemsEn: [
+            '<strong>Accuracy & Completeness:</strong> All information and documents submitted to Assiut Cement are true, complete, and up to date.',
+            '<strong>Legal Authorization:</strong> Documents belong to the contractor or are legally authorized without concealing material facts.',
+            '<strong>Anti-Forgery Pledge:</strong> Strict undertaking not to submit forged or misleading documents affecting registration or rewards.',
+            '<strong>Contractor Liability:</strong> Company review does not waive the contractor’s responsibility for any error or forgery.'
+          ]
+        },
+        right: {
+          page: '4', secAr: 'البند خامساً', secEn: 'Section 5',
+          titleAr: '🔐 الإقرار باستخدام رقم الهاتف المحمول', titleEn: '🔐 Mobile Number Usage Declaration',
+          itemsAr: [
+            '<strong>السيطرة والسرية:</strong> الرقم تحت الحيازة الفعلية للمقاول وهو مسؤول عن سرية الرسائل والأكواد المرسلة إليه.',
+            '<strong>حجية الإشعارات:</strong> أي كود أو رسالة ترسل للرقم المسجل تُعد مرسلة للمقاول رسمياً ما لم يخطر الشركة بتغييره.',
+            '<strong>الإخطار الفوري في 6 حالات:</strong> تغيير الرقم، فقدان/سرقة الهاتف أو الشريحة، توقف الرقم، انتقال ملكيته، فقدان السيطرة عليه، أو الاشتباه في استخدام الغير له.',
+            '<strong>إخلاء المسؤولية:</strong> الشركة غير مسؤولة عن أي استخدام غير مصرح به ناتج عن تأخر المقاول في الإخطار.'
+          ],
+          itemsEn: [
+            '<strong>Control & Confidentiality:</strong> SIM is under contractor’s actual control, responsible for keeping codes/SMS confidential.',
+            '<strong>Legal Validity of SMS:</strong> Messages/codes sent to the registered number are deemed officially delivered unless notified otherwise.',
+            '<strong>Immediate Notice (6 Cases):</strong> Number change, lost/stolen phone or SIM, line deactivation, ownership transfer, loss of control, or suspected third-party misuse.',
+            '<strong>Liability Limit:</strong> Company is not liable for unauthorized use resulting from delayed notification.'
+          ]
+        }
+      },
+      {
+        tabAr: 'الفصل 3: شروط المشاركة والإخلال (6–7)',
+        tabEn: 'Ch. 3: Terms & Breach Remedies (6–7)',
+        left: {
+          page: '5', secAr: 'البند سادساً', secEn: 'Section 6',
+          titleAr: '📜 شروط التسجيل والمشاركة في البرنامج (10 قواعد)', titleEn: '📜 Registration & Participation Terms (10 Rules)',
+          itemsAr: [
+            '<strong>القبول والاستحقاق:</strong> تقديم الاستمارة أو منح الكود لا يعد قبولاً نهائياً؛ ويحق للشركة طلب مستندات إضافية أو تعليق الصرف لحين التحقق.',
+            '<strong>منع التعدد والتداول:</strong> يُحظر تسجيل أكثر من حساب أو استخدام بيانات الغير أو بيع الأكواد وتداولها بصورة احتيالية.',
+            '<strong>مرجعية السجلات:</strong> السجلات والأنظمة الإلكترونية المعتمدة بالشركة هي الأساس في احتساب الجوائز، ولا ينشأ حق مكتسب قبل ثبوت الاستحقاق نهائياً.'
+          ],
+          itemsEn: [
+            '<strong>Acceptance & Eligibility:</strong> Submitting the form or receiving a code is not final approval; Company may request extra docs or suspend payouts pending verification.',
+            '<strong>No Multi-Accounts or Code Trading:</strong> Prohibited to register multiple accounts, use third-party IDs, or sell/trade codes fraudulently.',
+            '<strong>System Records:</strong> Company electronic records govern reward calculations; no vested right arises before final verification.'
+          ]
+        },
+        right: {
+          page: '6', secAr: 'البند سابعاً', secEn: 'Section 7',
+          titleAr: '⚖️ حالات الإخلال بالشروط وحقوق الشركة (8 مخالفات / 9 إجراءات)', titleEn: '⚖️ Program Breach & Company Remedies',
+          itemsAr: [
+            '<strong>المخالفات الـ 8:</strong> البيانات المضللة، المستندات المزورة، استخدام بيانات الغير، الحسابات المكررة، إساءة استخدام الأكواد، إخفاء معلومات جوهرية، الغش/التحايل، أو مخالفة التعليمات.',
+            '<strong>إجراءات الشركة الـ 9:</strong> رفض الطلب، تعليق/إلغاء الحساب، وقف المشاركة، إيقاف الصرف، سحب الجوائز غير المستحقة، استرداد القيمة، المقاصة القانونية، المطالبة بالتعويض، والملاحقة المدنية/الجنائية.'
+          ],
+          itemsEn: [
+            '<strong>8 Breach Triggers:</strong> Misleading info, forged docs, third-party data misuse, duplicate accounts, code abuse, hiding material facts, fraud, or violating rules.',
+            '<strong>9 Company Actions:</strong> Reject registration, suspend/cancel account, halt participation, freeze payouts, revoke unearned rewards, clawback funds, legal set-off, claim damages, and civil/criminal action.'
+          ]
+        }
+      },
+      {
+        tabAr: 'الفصل 4: العلاقة وحماية البيانات والتوقيع (8–17)',
+        tabEn: 'Ch. 4: Privacy, Sign-Off & Internal Rules (8–17)',
+        left: {
+          page: '7', secAr: 'البنود ثامناً إلى ثالث عشر', secEn: 'Sections 8 to 13',
+          titleAr: '🔒 طبيعة العلاقة وحماية البيانات والموافقة المستقلة', titleEn: '🔒 Relationship Nature, Data Privacy & Consent',
+          itemsAr: [
+            '<strong>العلاقة وتعديل البرنامج (8–9):</strong> المشاركة لا تنشئ علاقة عمل أو وكالة أو تمثيل للشركة، ويحق للشركة تعديل أو تعليق أو إنهاء البرنامج.',
+            '<strong>حماية البيانات الشخصية (10–11):</strong> معالجة البيانات لأغراض التحقق ومنع الغش وحفظ الحقوق، مع الالتزام بالتدابير الفنية والتنظيمية.',
+            '<strong>الرسائل التسويقية المستقلة (12):</strong> موافقة اختيارية مستقلة تماماً (أوافق / لا أوافق) ولا يؤثر رفضها على التسجيل أو الجوائز، مع التوقيع النهائي للمقاول (13).'
+          ],
+          itemsEn: [
+            '<strong>Relationship & Changes (8–9):</strong> Participation creates no employment, agency, or representation; Company may modify, suspend, or terminate the program.',
+            '<strong>Personal Data Notice (10–11):</strong> Data processed strictly for KYC, fraud prevention, and legal compliance under technical safeguards.',
+            '<strong>Independent Marketing Opt-In (12):</strong> Separate optional consent (Agree / Disagree) with zero impact on eligibility, followed by Contractor Final Sign-off (13).'
+          ]
+        },
+        right: {
+          page: '8', secAr: 'البنود 14–17 والتنبيهات السبعة', secEn: 'Sections 14–17 & 7 Guardrails',
+          titleAr: '✅ التحقق الداخلي، الاعتماد، والتنبيهات التشغيلية الـ 7', titleEn: '✅ Internal Verification, Sign-Off & 7 Guardrails',
+          itemsAr: [
+            '<strong>التحقق والمندوب والاعتماد (14–17):</strong> قائمة فحص الشركة (15 بنداً لمطابقة البطاقة والنشاط وعدم التكرار)، إقرار المندوب المختص، والاعتماد الداخلي لمسؤول البرنامج أو الإحالة للقانونية.',
+            '<strong>التنبيهات الـ 7 الصارمة:</strong> عدم التفعيل قبل الإلزاميات، عدم تصوير مستندات زائدة، حظر التسويق لمن اختار «لا أوافق»، حفظ الملفات بصلاحيات مقيدة، منع حفظ البيانات على هاتف المندوب الشخصي، إحالة الاشتباه بالتزوير للقانونية، وتسجيل كل تعديل بالتاريخ واسم الموظف.'
+          ],
+          itemsEn: [
+            '<strong>Company Audit & Sign-Off (14–17):</strong> 15-point verification checklist, Representative declaration, and Program Manager approval or Legal/Compliance referral.',
+            '<strong>7 Strict Guardrails:</strong> No activation before mandatory items, no excess doc copies, respect marketing opt-out, restricted-access storage, ban personal phone copies, escalate suspected fraud to Legal, and log every edit with date & employee name.'
+          ]
+        }
+      }
+    ];
+
+    function renderOverview() {
+      const isAr = lang === 'ar';
+      document.getElementById('execList').innerHTML = execData.map(x => `
+        <li><span class="dot-icon">${x.icon}</span><span>${isAr ? x.ar : x.en}</span></li>
+      `).join('');
+      document.getElementById('opsList').innerHTML = opsData.map(x => `
+        <li><span class="dot-icon">${x.icon}</span><span>${isAr ? x.ar : x.en}</span></li>
+      `).join('');
+    }
+
+    function renderRules(filter = 'all') {
+      const isAr = lang === 'ar';
+      const list = filter === 'all' ? rulesData : rulesData.filter(r => r.tier === filter);
+      document.getElementById('rulesGrid').innerHTML = list.map(r => `
+        <div class="rule-card">
+          <div class="rule-top">
+            <span class="rule-badge ${r.color}">${r.icon} RULE #${r.num}</span>
+            <span class="tier-pill">${isAr ? r.arTier : r.enTier}</span>
+          </div>
+          <h3>${isAr ? r.arTitle : r.enTitle}</h3>
+          <p>${isAr ? r.arRule : r.enRule}</p>
+          <div class="exc-box">${isAr ? r.arExc : r.enExc}</div>
+        </div>
+      `).join('');
+    }
+
+    function filterRules(tier, btn) {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      renderRules(tier);
+    }
+
+    function renderMatrix() {
+      const isAr = lang === 'ar';
+      document.getElementById('matrixBody').innerHTML = matrixData.map(r => `
+        <tr>
+          <td><strong>${isAr ? r.ar : r.en}</strong></td>
+          <td>${r.c.includes('✔') ? `<span class="chk-pill">${r.c}</span>` : r.c}</td>
+          <td>${r.m.includes('✔') ? `<span class="chk-pill">${r.m}</span>` : r.m}</td>
+          <td>${r.d.includes('✔') ? `<span class="chk-pill">${r.d}</span>` : r.d}</td>
+        </tr>
+      `).join('');
+    }
+
+    function runSim() {
+      const isAr = lang === 'ar';
+      const kyc = document.getElementById('s-kyc').value;
+      const bc = document.getElementById('s-bc').value;
+      const ret = document.getElementById('s-ret').value;
+      const vis = document.getElementById('s-vis').value;
+      const conc = document.getElementById('s-conc').value;
+
+      let cls = 'st-ok';
+      let title = isAr ? '✅ اعتماد قياسي مباشر (Standard Approved)' : '✅ Standard Approved';
+      let notes = [
+        isAr
+          ? 'جميع البيانات مستوفاة، ومكالمة Back-Check مؤكدة، والكميات مطابقة لـ SAP وضمن الحدود القياسية.'
+          : 'All KYC data complete, Back-Check confirmed, and quantities reconciled with SAP within standard caps.'
+      ];
+
+      if (kyc === 'no') {
+        cls = 'st-danger';
+        title = isAr ? '⛔ موقوف — لا يتم التنفيذ (Hold: Mandatory Data Incomplete)' : '⛔ Hold — Mandatory Data Incomplete';
+        notes = [
+          isAr
+            ? 'وفق الضابط (1) والتنبيه التشغيلي (1): يُمنع تفعيل أو معالجة الطلب قبل استكمال البيانات والمستندات الإلزامية.'
+            : 'Per Control #1 & Guardrail #1: No processing or activation until mandatory data and ID documents are complete.'
+        ];
+      } else {
+        if (bc === 'unreachable') {
+          cls = 'st-warn';
+          title = isAr ? '⏸️ تعليق الكمية لحين التأكيد (Quantity Withheld — Back-Check)' : '⏸️ Quantity Withheld — Unreachable Back-Check';
+          notes.push(
+            isAr
+              ? 'وفق قاعدة Contractor Back-Check: تعذر الوصول للمقاول يستلزم حجز/تعليق الكمية حتى يثبت خلاف ذلك.'
+              : 'Per Contractor Back-Check rule: Unreachable contractor has quantity withheld unless proven otherwise.'
+          );
+        }
+        if (ret === 'second_no') {
+          cls = 'st-danger';
+          title = isAr ? '🚫 غير محتسب — بانتظار موافقة Salesman' : '🚫 Not Counted — Salesman Approval Required';
+          notes.push(
+            isAr
+              ? 'التجار الثانويون (Second-hand) يتطلبون موافقة Salesman قبل الاحتساب ولا يُدرجون ضمن ملف SAP الرئيسي.'
+              : 'Second-hand retailers require Salesman approval before counting and are excluded from the main SAP file.'
+          );
+        } else if (ret === 'variance') {
+          cls = 'st-warn';
+          title = isAr ? '🔍 مراجعة فروق SAP قبل الصرف (SAP Variance Check)' : '🔍 SAP Variance Investigation Required';
+          notes.push(
+            isAr
+              ? 'وفق الضابط (6): أي فرق في مطابقة SAP يُفحص ويُعتمد من مدير المبيعات قبل صرف المكافأة (مع التصعيد عند الاقتضاء).'
+              : 'Per Control #6: Variance must be investigated and approved by Sales Manager before reward processing (escalate if applicable).'
+          );
+        }
+        if (vis === '2') {
+          if (cls === 'st-ok') {
+            cls = 'st-warn';
+            title = isAr ? '📩 يتطلب اعتماد استشاري المبيعات (Sales Consultant Approval)' : '📩 Sales Consultant Approval Required';
+          }
+          notes.push(
+            isAr
+              ? 'الزيارة الثانية لنفس المقاول في اليوم تتطلب اعتماد استشاري المبيعات عبر بريد رسمي (CC لمدير قطاع المبيعات).'
+              : '2nd site visit for same contractor/day requires Sales Consultant approval via official email (CC Sales Director).'
+          );
+        } else if (vis === '3') {
+          if (cls === 'st-ok') {
+            cls = 'st-warn';
+            title = isAr ? '📩 يتطلب اعتماد مدير المبيعات (Sales Manager Approval)' : '📩 Sales Manager Approval Required';
+          }
+          notes.push(
+            isAr
+              ? 'الزيارة الثالثة لنفس المقاول في اليوم تتطلب اعتماد مدير المبيعات عبر بريد رسمي (CC لمدير قطاع المبيعات).'
+              : '3rd site visit for same contractor/day requires Sales Manager approval via official email (CC Sales Director).'
+          );
+        }
+        if (conc === 'mid') {
+          if (cls === 'st-ok') {
+            cls = 'st-warn';
+            title = isAr ? '📩 يتطلب اعتماد مدير المبيعات (Sales Manager Approval)' : '📩 Sales Manager Approval Required';
+          }
+          notes.push(
+            isAr
+              ? 'التركّز الإقليمي (>10%–15%) أو نسبة كمية المقاول من التاجر (>20%–25%) يتطلب اعتماد مدير المبيعات عبر بريد رسمي.'
+              : 'Regional concentration (>10%–15%) or contractor quantity (>20%–25% of retailer dispatch) requires Sales Manager approval.'
+          );
+        } else if (conc === 'high') {
+          cls = 'st-danger';
+          title = isAr ? '🚨 يتطلب اعتماد مدير قطاع المبيعات (Sales Director Approval)' : '🚨 Sales Director Approval Required';
+          notes.push(
+            isAr
+              ? 'تجاوز الحد الأعلى (تركّز إقليمي >15% أو إجمالي مكافآت >10% أو كمية تاجر >25%) يستوجب اعتماد مدير قطاع المبيعات رسمياً.'
+              : 'Exceeding upper threshold (>15% regional, >10% total rewards, or >25% retailer dispatch) requires Sales Director approval.'
+          );
+        }
+      }
+
+      document.getElementById('simOutput').innerHTML = `
+        <span class="st-badge ${cls}">${title}</span>
+        <ul class="bullet-list">${notes.map(n => `<li><span class="dot-icon">🔹</span><span>${n}</span></li>`).join('')}</ul>
+      `;
+    }
+
+    function renderBook() {
+      const isAr = lang === 'ar';
+      document.getElementById('bookTabs').innerHTML = bookSpreads.map((s, idx) => `
+        <button class="book-tab ${idx === currentSpread ? 'active' : ''}" onclick="goSpread(${idx})">
+          ${isAr ? s.tabAr : s.tabEn}
+        </button>
+      `).join('');
+
+      const sp = bookSpreads[currentSpread];
+      const renderPage = (p) => `
+        <div class="page-body">
+          <div class="page-header">
+            <span>${isAr ? 'استمارة تموينك على سيمكس' : 'Tamwenak Official Form'}</span>
+            <span>${isAr ? p.secAr : p.secEn}</span>
+          </div>
+          <h3>${isAr ? p.titleAr : p.titleEn}</h3>
+          <ul class="page-items">
+            ${(isAr ? p.itemsAr : p.itemsEn).map(item => `<li>${item}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="page-footer">
+          <span>Assiut Cement (CEMEX)</span>
+          <span>${isAr ? 'صفحة ' + p.page : 'Page ' + p.page}</span>
+        </div>
+      `;
+
+      document.getElementById('leftPage').innerHTML = renderPage(sp.left);
+      document.getElementById('rightPage').innerHTML = renderPage(sp.right);
+
+      document.getElementById('prevSpreadBtn').disabled = currentSpread === 0;
+      document.getElementById('nextSpreadBtn').disabled = currentSpread === bookSpreads.length - 1;
+      document.getElementById('prevSpreadBtn').textContent = isAr ? '◀ الصفحة السابقة' : '◀ Previous Spread';
+      document.getElementById('nextSpreadBtn').textContent = isAr ? 'الصفحة التالية ▶' : 'Next Spread ▶';
+      document.getElementById('spreadIndicator').textContent = isAr
+        ? `الصفحات ${sp.left.page}–${sp.right.page} من 8`
+        : `Pages ${sp.left.page}–${sp.right.page} of 8`;
+    }
+
+    function changeSpread(delta) {
+      const next = currentSpread + delta;
+      if (next >= 0 && next < bookSpreads.length) {
+        currentSpread = next;
+        renderBook();
+      }
+    }
+
+    function goSpread(idx) {
+      currentSpread = idx;
+      renderBook();
+    }
+
+    function toggleLang() {
+      lang = lang === 'ar' ? 'en' : 'ar';
+      const isAr = lang === 'ar';
+      document.documentElement.lang = lang;
+      document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+      document.body.dir = isAr ? 'rtl' : 'ltr';
+
+      document.getElementById('langBtn').textContent = isAr ? '🌐 English (LTR)' : '🌐 العربية (RTL)';
+      document.getElementById('t-brandTitle').textContent = isAr
+        ? 'منظومة حوكمة وتطوير برنامج «تموينك على سيمكس»'
+        : 'Tamwenak Ala CEMEX — Governance & Control System';
+      document.getElementById('t-brandSub').textContent = isAr
+        ? 'شركة أسمنت أسيوط — إطار الرقابة والاعتمادات والاستمارة المعتمدة'
+        : 'Assiut Cement Co. — Control Framework, Approval Matrix & Official Form';
+
+      document.getElementById('nav-1').textContent = isAr ? '🎯 ملخص التطوير' : '🎯 Overview';
+      document.getElementById('nav-2').textContent = isAr ? '🛡️ القواعد الـ 8' : '🛡️ 8 Controls';
+      document.getElementById('nav-3').textContent = isAr ? '✅ مصفوفة الاعتمادات' : '✅ Approval Matrix';
+      document.getElementById('nav-4').textContent = isAr ? '⚙️ محاكي القرار' : '⚙️ Simulator';
+      document.getElementById('nav-5').textContent = isAr ? '📖 كتاب الاستمارة' : '📖 Form Book';
+
+      document.getElementById('t-pill').textContent = isAr
+        ? '✨ نظام الحوكمة المحدث والاستمارة الرسمية • RTL.29.10.2026'
+        : '✨ Updated Governance System & Official Form • RTL.29.10.2026';
+      document.getElementById('t-heroTitle').textContent = isAr
+        ? 'تطوير برنامج «تموينك على سيمكس»: عدالة التوزيع، التحقق الصارم، وحوكمة الاستثناءات'
+        : 'Tamwenak Program Enhancement: Fairness, Strict Validation & Exception Governance';
+      document.getElementById('t-heroDesc').textContent = isAr
+        ? 'منظومة متكاملة لحماية القيمة التجارية لبرنامج ولاء المقاولين وتعزيز الشفافية وصحة المعاملات، من خلال وضع سقوف واضحة للزيارات والتركّز والكميات، وتفعيل مكالمات التحقق (Back-Check)، والمطابقة الدورية مع نظام SAP، واعتماد الاستثناءات عبر مستويات إدارية موثقة.'
+        : 'An integrated framework protecting the commercial value of the contractor loyalty program while strengthening fairness, transparency, and transaction validity through visit/concentration caps, mandatory Back-Check calls, periodic SAP reconciliation, and documented tiered approvals.';
+
+      document.getElementById('t-kpi1').textContent = isAr
+        ? 'الحد القياسي للزيارات الميدانية المقبولة لكل مقاول يومياً'
+        : 'Standard accepted site visits per contractor per day';
+      document.getElementById('t-kpi2').textContent = isAr
+        ? 'سقف تركّز المقاول إقليمياً (كل 15 يوماً) ومن إجمالي المكافآت'
+        : 'Max contractor concentration regionally (15-day) & of total rewards';
+      document.getElementById('t-kpi3').textContent = isAr
+        ? 'الحد الأقصى لكميات المقاول مقارنة بسحوبات التاجر الشهرية'
+        : 'Maximum contractor quantity vs. retailer monthly dispatch';
+      document.getElementById('t-kpi4').textContent = isAr
+        ? '17 قسماً في استمارة التسجيل الرسمية + 7 ضوابط تشغيلية صارمة'
+        : '17 sections in official registration form + 7 strict guardrails';
+
+      document.getElementById('t-ovTitle').textContent = isAr
+        ? 'الملخص التنفيذي والإضافات التشغيلية (Email Governance Framework)'
+        : 'Executive Summary & Operational Controls (Email Framework)';
+      document.getElementById('t-ovSub').textContent = isAr
+        ? 'أهداف التطوير وضوابط التشغيل الميداني والتيلماركتنج ومطابقة SAP'
+        : 'Program enhancement goals, telemarketing back-checks, and SAP reconciliation';
+      document.getElementById('t-execHead').textContent = isAr ? '📌 الملخص التنفيذي للتطوير' : '📌 Executive Summary';
+      document.getElementById('t-opsHead').textContent = isAr ? '📞 ضوابط التشغيل الميداني والتيلماركتنج وSAP' : '📞 Field, Telemarketing & SAP Controls';
+
+      document.getElementById('t-rulesTitle').textContent = isAr
+        ? 'القواعد والضوابط الرقابية الثمانية (Proposed Control Measures)'
+        : 'The 8 Proposed Control Measures';
+      document.getElementById('t-rulesSub').textContent = isAr
+        ? 'اضغط على التصنيف لتصفية القواعد حسب جهة اعتماد الاستثناء'
+        : 'Filter rules by exception approval authority';
+      document.getElementById('f-all').textContent = isAr ? 'الكل (8)' : 'All (8)';
+      document.getElementById('f-consultant').textContent = isAr ? 'استشاري المبيعات' : 'Sales Consultant';
+      document.getElementById('f-manager').textContent = isAr ? 'مدير المبيعات' : 'Sales Manager';
+      document.getElementById('f-director').textContent = isAr ? 'مدير قطاع المبيعات' : 'Sales Director';
+
+      document.getElementById('t-matTitle').textContent = isAr
+        ? 'ملخص مصفوفة الاعتمادات (Approval Matrix Summary)'
+        : 'Approval Matrix Summary';
+      document.getElementById('t-matSub').textContent = isAr
+        ? 'جميع الاستثناءات المعتمدة تشترط بريداً إلكترونياً رسمياً مع نسخة (CC) لمدير قطاع المبيعات'
+        : 'All approved exceptions require official email with Sales Director copied (CC)';
+      document.getElementById('th-1').textContent = isAr ? 'الاستثناء / المحفّز' : 'Exception / Trigger';
+      document.getElementById('th-2').textContent = isAr ? 'استشاري المبيعات' : 'Sales Consultant';
+      document.getElementById('th-3').textContent = isAr ? 'مدير المبيعات' : 'Sales Manager';
+      document.getElementById('th-4').textContent = isAr ? 'مدير قطاع المبيعات' : 'Sales Director';
+
+      document.getElementById('t-simTitle').textContent = isAr
+        ? 'محاكي فحص الحالة والاعتماد التلقائي (Governance Simulator)'
+        : 'Governance & Exception Decision Simulator';
+      document.getElementById('t-simSub').textContent = isAr
+        ? 'اختر معطيات الحالة لمعرفة القرار التشغيلي ومستوى الاعتماد المطلوب فوراً'
+        : 'Select case parameters to determine automated decision and approval tier';
+
+      document.getElementById('t-bookTitle').textContent = isAr
+        ? 'كتاب استمارة الاشتراك والتسجيل والالتزام (RTL.29.10.2026)'
+        : 'Contractor Registration & Compliance Book (RTL.29.10.2026)';
+      document.getElementById('t-bookSub').textContent = isAr
+        ? 'تصفّح بنود استمارة شركة أسمنت أسيوط الـ 17 والتنبيهات التشغيلية ككتاب تفاعلي'
+        : 'Flip through all 17 Assiut Cement registration form sections & 7 internal guardrails';
+      document.getElementById('t-footer').textContent = isAr
+        ? 'منظومة حوكمة وتطوير برنامج «تموينك على سيمكس» — شركة أسمنت أسيوط'
+        : 'Tamwenak Ala CEMEX Governance & Control System — Assiut Cement Co.';
+
+      const activeFilter = document.querySelector('.chip.active').id.replace('f-', '');
+      renderOverview();
+      renderRules(activeFilter);
+      renderMatrix();
+      runSim();
+      renderBook();
+    }
+
+    renderOverview();
+    renderRules('all');
+    renderMatrix();
+    runSim();
+    renderBook();
+  </script>
+</body>
+</html>
